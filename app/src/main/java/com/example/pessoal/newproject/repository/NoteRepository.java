@@ -1,17 +1,18 @@
-package com.example.pessoal.newproject.base;
+package com.example.pessoal.newproject.repository;
 
+import com.example.pessoal.newproject.base.MainMVP;
 import com.example.pessoal.newproject.model.Note;
 
 /**
- * Created by ZUP on 25/09/2017.
+ * Created by ZUP on 26/09/2017.
  */
 
-public class MainModel implements MainMVP.ModelOperations {
+public class NoteRepository implements MainMVP.ModelOperations {
 
     //referencia para Presenter
     private MainMVP.RequiredPresenterOperations mPresenter;
 
-    public MainModel(MainMVP.RequiredPresenterOperations mPresenter) {
+    public NoteRepository(MainMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
     }
 

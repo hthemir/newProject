@@ -1,6 +1,7 @@
 package com.example.pessoal.newproject.fragments;
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
@@ -11,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.pessoal.newproject.MainActivity;
 import com.example.pessoal.newproject.R;
+import com.example.pessoal.newproject.activities.ActivityHome;
 
 /**
  * Created by ZUP on 25/09/2017.
@@ -63,11 +64,16 @@ public class FragmentWelcome extends Fragment {
     }
 
     protected void onStartAnimation() {
-        /*AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.slide_bottom_to_center);
-        set.setTarget(mTextViewWelcome);
-        set.start();*/
+        AnimatorSet setScale = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.zoom_in);
+        setScale.setTarget(mTextViewWelcome);
+        AnimatorSet setTranslation = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.translate_bottom_to_center);
+        setTranslation.setTarget(mTextViewWelcome);
 
-        ValueAnimator animatorSize = ValueAnimator.ofFloat(mStartSize, mEndSize);
+        AnimatorSet animatorAll = new AnimatorSet();
+        animatorAll.playTogether(setScale, setTranslation);
+        animatorAll.start();
+
+        /*ValueAnimator animatorSize = ValueAnimator.ofFloat(mStartSize, mEndSize);
         animatorSize.setDuration(DEFAULT_ANIMATION_DURATION);
         animatorSize.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -88,12 +94,38 @@ public class FragmentWelcome extends Fragment {
         });
 
         AnimatorSet animatorAll = new AnimatorSet();
-        animatorAll.playTogether(animatorPosition, animatorSize);
+        animatorAll.playTogether(animatorSize, animatorPosition);
         animatorAll.start();
+        */
     }
 
     protected void onEndAnimation() {
-        ValueAnimator animatorSize = ValueAnimator.ofFloat(mEndSize, mStartSize);
+        AnimatorSet setScale = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.zoom_out);
+        setScale.setTarget(mTextViewWelcome);
+        AnimatorSet setTranslation = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.translate_center_to_top);
+        setTranslation.setTarget(mTextViewWelcome);
+
+        AnimatorSet animatorAll = new AnimatorSet();
+        animatorAll.playTogether(setScale, setTranslation);
+        animatorAll.start();
+
+        animatorAll.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) { }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ((ActivityHome)getActivity()).replaceFragment(FragmentNewNote.newInstance(), "tag", true);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) { }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) { }
+        });
+
+        /*ValueAnimator animatorSize = ValueAnimator.ofFloat(mEndSize, mStartSize);
         animatorSize.setDuration(DEFAULT_ANIMATION_DURATION);
         animatorSize.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -124,7 +156,7 @@ public class FragmentWelcome extends Fragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                ((MainActivity)getActivity()).replaceFragment(FragmentNewNote.newInstance(), "tag", true);
+                ((ActivityHome)getActivity()).replaceFragment(FragmentNewNote.newInstance(), "tag", true);
             }
 
             @Override
@@ -136,7 +168,7 @@ public class FragmentWelcome extends Fragment {
             public void onAnimationRepeat(Animator animation) {
 
             }
-        });
+        });*/
     }
 
 

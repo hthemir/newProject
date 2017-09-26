@@ -1,5 +1,7 @@
 package com.example.pessoal.newproject.base;
 
+import android.support.v4.app.Fragment;
+
 import com.example.pessoal.newproject.model.Note;
 
 /**
@@ -40,6 +42,9 @@ public interface MainMVP {
         void removeNote(Note note);
     }
 
+    interface RequiredActivityOperations {
+        void replaceFragment(final Fragment fragment, final String tag, final boolean addToBackStack);
+    }
 
 }
 
