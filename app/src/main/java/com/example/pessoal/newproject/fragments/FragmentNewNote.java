@@ -15,22 +15,44 @@ import com.example.pessoal.newproject.base.MainMVP;
 import com.example.pessoal.newproject.base.StateMaintainer;
 import com.example.pessoal.newproject.presenter.NotePresenter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by ZUP on 25/09/2017.
  */
 
 public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOperations{
     protected final String TAG = getClass().getSimpleName();
-    protected View mFrameLayout;
 
     private StateMaintainer mStateMaintainer;
     private MainMVP.PresenterOperations mPresenter;
 
+    @BindView(R.id.container)
+    View mFrameLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_new_note, container, false);
+        ButterKnife.bind(this,view);
         mStateMaintainer = new StateMaintainer(getActivity().getFragmentManager(), TAG);
         startMVPOperations();
-        return inflater.inflate(R.layout.fragment_new_note, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onStartAnimation();
+    }
+
+    public static FragmentNewNote newInstance(){
+        return new FragmentNewNote();
     }
 
     public void startMVPOperations() {
@@ -73,22 +95,10 @@ public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOpe
 
     }
 
-    public static FragmentNewNote newInstance(){
-        return new FragmentNewNote();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        View v = getView();
-        mFrameLayout = v.findViewById(R.id.container);
-
-        onStartAnimation();
-    }
-
     protected void onStartAnimation(){
         AnimatorSet fadeInAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity().getApplicationContext(), R.animator.fade_in);
         fadeInAnimator.setTarget(mFrameLayout);
         fadeInAnimator.start();
     }
+
 }

@@ -1,15 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:text="BATATA"
-        android:textSize="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical|center_horizontal"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:paddingEnd="@dimen/margin_20"
+        android:paddingStart="@dimen/margin_20"
+        android:text="@string/new_note"
+        android:textAlignment="center"
+        android:textColor="@color/colorDarkBlue"
+        android:textSize="@dimen/default_text_size" />
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/ll_note_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_content"
+        android:layout_marginStart="@dimen/space_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/default_text_view_height"
+            android:layout_gravity="center_vertical"
+            android:text="@string/note_title"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.example.pessoal.newproject.custom_layout.LinedEditText
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/default_text_view_height"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:ems="60"
+            android:singleLine="true"
+            android:textSize="@dimen/default_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_note_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_content"
+        android:layout_marginStart="@dimen/space_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/default_text_view_height"
+            android:layout_gravity="center_vertical"
+            android:text="@string/note_content"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.example.pessoal.newproject.custom_layout.LinedEditText
+            android:id="@+id/et_nickname_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:ems="60"
+            android:gravity="top|left"
+            android:maxLines="5"
+            android:minLines="5"
+            android:textSize="@dimen/default_text_size" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_save_new_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_content"
+        android:layout_marginStart="@dimen/space_content"
+        android:text="@string/save_button" />
+
+
+</LinearLayout>

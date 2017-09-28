@@ -15,52 +15,57 @@ import android.widget.TextView;
 import com.example.pessoal.newproject.R;
 import com.example.pessoal.newproject.activities.ActivityHome;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+
 /**
  * Created by ZUP on 25/09/2017.
  */
 
 public class FragmentWelcome extends Fragment {
-    public static final long DEFAULT_ANIMATION_DURATION = 2500L;
-    protected View mFrameLayout;
-    protected TextView mTextViewWelcome;
-    protected float mStartSize = 0;
-    protected float mEndSize = 24;
-    protected float mScreenHeight;
+    @BindView(R.id.container) View mFrameLayout;
+    @BindView(R.id.textViewWelcome) TextView mTextViewWelcome;
+
+    protected AnimatorSet animatorAll;
+    protected boolean firstClick;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_welcome, container, false);
+        View view = inflater.inflate(R.layout.fragment_welcome, container, false);
+        ButterKnife.bind(this, view);
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        View v = getView();
-        mFrameLayout = v.findViewById(R.id.container);
-        mTextViewWelcome = (TextView) v.findViewById(R.id.textViewWelcome);
-
-        mFrameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onEndAnimation();
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mScreenHeight = displayMetrics.heightPixels/(displayMetrics.ydpi/DisplayMetrics.DENSITY_DEFAULT);
+        animatorAll = new AnimatorSet();
+        firstClick = true;
 
         onStartAnimation();
     }
 
-    public static Fragment newInstance() {
+    public static FragmentWelcome newInstance() {
         return new FragmentWelcome();
+    }
+
+    @OnClick(R.id.container)
+    public void frameLayoutClick() {
+        if (firstClick) {
+            onEndAnimation();
+            firstClick = false;
+        } else {
+            animatorAll.cancel();
+        }
     }
 
     protected void onStartAnimation() {
@@ -69,34 +74,8 @@ public class FragmentWelcome extends Fragment {
         AnimatorSet setTranslation = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.translate_bottom_to_center);
         setTranslation.setTarget(mTextViewWelcome);
 
-        AnimatorSet animatorAll = new AnimatorSet();
         animatorAll.playTogether(setScale, setTranslation);
         animatorAll.start();
-
-        /*ValueAnimator animatorSize = ValueAnimator.ofFloat(mStartSize, mEndSize);
-        animatorSize.setDuration(DEFAULT_ANIMATION_DURATION);
-        animatorSize.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float animatedValue = (float) animation.getAnimatedValue();
-                mTextViewWelcome.setTextSize(animatedValue);
-            }
-        });
-
-        ValueAnimator animatorPosition = ValueAnimator.ofFloat(mScreenHeight, 0);
-        animatorPosition.setDuration(DEFAULT_ANIMATION_DURATION);
-        animatorPosition.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float animatedValue = (float) animation.getAnimatedValue();
-                mTextViewWelcome.setTranslationY(animatedValue);
-            }
-        });
-
-        AnimatorSet animatorAll = new AnimatorSet();
-        animatorAll.playTogether(animatorSize, animatorPosition);
-        animatorAll.start();
-        */
     }
 
     protected void onEndAnimation() {
@@ -105,7 +84,6 @@ public class FragmentWelcome extends Fragment {
         AnimatorSet setTranslation = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(), R.animator.translate_center_to_top);
         setTranslation.setTarget(mTextViewWelcome);
 
-        AnimatorSet animatorAll = new AnimatorSet();
         animatorAll.playTogether(setScale, setTranslation);
         animatorAll.start();
 
@@ -124,52 +102,5 @@ public class FragmentWelcome extends Fragment {
             @Override
             public void onAnimationRepeat(Animator animation) { }
         });
-
-        /*ValueAnimator animatorSize = ValueAnimator.ofFloat(mEndSize, mStartSize);
-        animatorSize.setDuration(DEFAULT_ANIMATION_DURATION);
-        animatorSize.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float animatedValue = (float) animation.getAnimatedValue();
-                mTextViewWelcome.setTextSize(animatedValue);
-            }
-        });
-
-        ValueAnimator animatorPosition = ValueAnimator.ofFloat(0, -mScreenHeight);
-        animatorPosition.setDuration(DEFAULT_ANIMATION_DURATION);
-        animatorPosition.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float animatedValue = (float) animation.getAnimatedValue();
-                mTextViewWelcome.setTranslationY(animatedValue);
-            }
-        });
-
-        AnimatorSet animatorAll = new AnimatorSet();
-        animatorAll.playTogether(animatorPosition, animatorSize);
-        animatorAll.start();
-        animatorAll.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                ((ActivityHome)getActivity()).replaceFragment(FragmentNewNote.newInstance(), "tag", true);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });*/
     }
-
-
 }

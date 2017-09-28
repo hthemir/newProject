@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NewProject</string>
+
+    <string name="new_note">Nova Anotação</string>
+    <string name="note_title">Título:</string>
+    <string name="note_content">Conteúdo:</string>
+    <string name="save_button">Salvar</string>
 </resources>
