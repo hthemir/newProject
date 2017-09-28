@@ -5,8 +5,13 @@ package com.example.pessoal.newproject.model;
  */
 
 public class Note {
+    private String noteTitle;
     private String noteText;
     private String date;
+
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
+    }
 
     public void setNoteText(String noteText) {
         this.noteText = noteText;
@@ -18,5 +23,13 @@ public class Note {
 
     public String getDate() {
         return date;
+    }
+
+    public String getTitle() {
+        return noteTitle;
+    }
+
+    public String getContent() {
+        return noteText;
     }
 }

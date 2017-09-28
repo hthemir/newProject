@@ -22,13 +22,15 @@ public interface MainMVP {
     interface PresenterOperations {
         void onConfigurationChanged(RequiredViewOperations view);
         void onDestroy(boolean isChangingConfig);
-        void newNote(String noteText);
+        void newNote(String noteTitle, String noteText);
         void deleteNote(Note note);
     }
 
     //usado pelo model para comunicar o presenter
     //qualquer operação para enviar informações (de sucesso ou erro) do model ao presenter
     interface RequiredPresenterOperations {
+        void newNote(String noteTitle, String noteText);
+
         void onInsertedNote(Note newNote);
         void onRemovedNote(Note note);
         void onError(String errorMessage);

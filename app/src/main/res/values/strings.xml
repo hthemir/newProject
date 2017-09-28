@@ -5,4 +5,6 @@
     <string name="note_title">Título:</string>
     <string name="note_content">Conteúdo:</string>
     <string name="save_button">Salvar</string>
+
+    <string name="ok">OK</string>
 </resources>

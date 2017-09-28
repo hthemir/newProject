@@ -37,8 +37,9 @@ public class NotePresenter implements MainMVP.RequiredPresenterOperations, MainM
     }
 
     @Override
-    public void newNote(String noteText) {
+    public void newNote(String noteTitle, String noteText) {
         Note note = new Note();
+        note.setNoteTitle(noteTitle);
         note.setNoteText(noteText);
         note.setDate(getDate());
         mModel.insertNote(note);

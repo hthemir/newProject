@@ -26,15 +26,16 @@ public class NoteRepository implements MainMVP.ModelOperations {
     //insere nota
     @Override
     public void insertNote(Note newNote) {
-        //logica de insercao AQUI
-        //
-
-        //se sucesso
-        if (true)
+        if (isValid(newNote))
             mPresenter.onInsertedNote(newNote);
-            //se falha
         else
             mPresenter.onError("error message");
+    }
+
+    private boolean isValid(Note newNote) {
+        if (newNote==null || newNote.getTitle().equals("") || newNote.getContent().equals(""))
+            return false;
+        return true;
     }
 
     //remove nota

@@ -2,21 +2,29 @@ package com.example.pessoal.newproject.fragments;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pessoal.newproject.R;
 import com.example.pessoal.newproject.base.MainMVP;
 import com.example.pessoal.newproject.base.StateMaintainer;
+import com.example.pessoal.newproject.model.Note;
 import com.example.pessoal.newproject.presenter.NotePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by ZUP on 25/09/2017.
@@ -28,8 +36,10 @@ public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOpe
     private StateMaintainer mStateMaintainer;
     private MainMVP.PresenterOperations mPresenter;
 
-    @BindView(R.id.container)
-    View mFrameLayout;
+    @BindView(R.id.container) View mFrameLayout;
+    @BindView(R.id.et_note_title) EditText mNoteTitle;
+    @BindView(R.id.et_note_content) EditText mNoteContent;
+    @BindView(R.id.bt_save_new_note) Button mSaveButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,13 +102,34 @@ public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOpe
 
     @Override
     public void showAlert(String message) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getActivity().getApplicationContext(), android.R.style.Theme.AppCompat.Light.DarkActionBar);
+        } else {
+            builder = new AlertDialog.Builder(getActivity().getApplicationContext());
+        }*/
+        builder.setTitle("Erro")
+                .setMessage(message)
+                .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                })
+                .setIcon(R.drawable.icon_alert_red)
+                .show();
     }
 
     protected void onStartAnimation(){
         AnimatorSet fadeInAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity().getApplicationContext(), R.animator.fade_in);
         fadeInAnimator.setTarget(mFrameLayout);
         fadeInAnimator.start();
+    }
+
+    @OnClick(R.id.bt_save_new_note)
+    public void saveNewNote(){
+        mPresenter.newNote(mNoteTitle!=null ? mNoteTitle.getText().toString() : "" ,mNoteContent!=null? mNoteContent.getText().toString() : "");
     }
 
 }
