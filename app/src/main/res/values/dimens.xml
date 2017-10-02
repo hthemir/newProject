@@ -9,4 +9,6 @@
 
     <dimen name="note_title_size">40dp</dimen>
     <dimen name="note_content_size">300dp</dimen>
+
+    <dimen name="list_note_header">60dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.pessoal.newproject.R;
 import com.example.pessoal.newproject.base.MainMVP;
+import com.example.pessoal.newproject.fragments.FragmentNewNote;
 import com.example.pessoal.newproject.fragments.FragmentWelcome;
 
 /**
@@ -13,6 +14,8 @@ import com.example.pessoal.newproject.fragments.FragmentWelcome;
  */
 
 public class ActivityHome extends AppCompatActivity implements MainMVP.RequiredActivityOperations {
+
+    private boolean justOpennedApplication = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,11 @@ public class ActivityHome extends AppCompatActivity implements MainMVP.RequiredA
     @Override
     protected void onResume() {
         super.onResume();
-        replaceFragment(FragmentWelcome.newInstance(),"tag", false);
+        if (justOpennedApplication) {
+            replaceFragment(FragmentWelcome.newInstance(), "tag", true);
+            justOpennedApplication = false;
+        } else
+            replaceFragment(FragmentNewNote.newInstance(), "tag", true);
     }
 
     @Override

@@ -1,54 +1,59 @@
 package com.example.pessoal.newproject.fragments;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pessoal.newproject.R;
-import com.example.pessoal.newproject.activities.ActivityHome;
+import com.example.pessoal.newproject.adapters.AdapterNoteRecyclerView;
 import com.example.pessoal.newproject.base.MainMVP;
 import com.example.pessoal.newproject.base.StateMaintainer;
 import com.example.pessoal.newproject.model.Note;
 import com.example.pessoal.newproject.presenter.NotePresenter;
+import com.example.pessoal.newproject.repository.NoteRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
- * Created by ZUP on 25/09/2017.
+ * Created by ZUP on 02/10/2017.
  */
 
-public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOperations{
+public class FragmentNotes extends Fragment implements MainMVP.RequiredViewOperations {
     protected final String TAG = getClass().getSimpleName();
 
     private StateMaintainer mStateMaintainer;
     private MainMVP.PresenterOperations mPresenter;
 
-    @BindView(R.id.container) View mFrameLayout;
-    @BindView(R.id.et_note_title) EditText mNoteTitle;
-    @BindView(R.id.et_note_content) EditText mNoteContent;
-    @BindView(R.id.bt_save_new_note) Button mSaveButton;
+    @BindView(R.id.rv_notes)
+    RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_notes, container, false);
         ButterKnife.bind(this,view);
         mStateMaintainer = new StateMaintainer(getActivity().getFragmentManager(), TAG);
         startMVPOperations();
+        setupView();
         return view;
+    }
+
+    private void setupView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        AdapterNoteRecyclerView adapter = new AdapterNoteRecyclerView(NoteRepository.getList(), getActivity(),this);
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -59,17 +64,10 @@ public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOpe
     @Override
     public void onResume() {
         super.onResume();
-        clearView();
-        onStartAnimation();
     }
 
-    private void clearView() {
-        mNoteTitle.setText("");
-        mNoteContent.setText("");
-    }
-
-    public static FragmentNewNote newInstance(){
-        return new FragmentNewNote();
+    public static FragmentNotes newInstance(){
+        return new FragmentNotes();
     }
 
     public void startMVPOperations() {
@@ -123,20 +121,11 @@ public class FragmentNewNote extends Fragment implements MainMVP.RequiredViewOpe
                 .show();
     }
 
-    protected void onStartAnimation(){
-        AnimatorSet fadeInAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity().getApplicationContext(), R.animator.fade_in);
-        fadeInAnimator.setTarget(mFrameLayout);
-        fadeInAnimator.start();
+    public void removeNote(Note note) {
+        mPresenter.deleteNote(note);
     }
 
-    @OnClick(R.id.bt_save_new_note)
-    public void saveNewNote(){
-        mPresenter.newNote(mNoteTitle!=null ? mNoteTitle.getText().toString() : "" ,mNoteContent!=null? mNoteContent.getText().toString() : "");
+    public void editNote(Note note) {
+        mPresenter.editNote(note);
     }
-
-    @OnClick(R.id.bt_provisorio)
-    public void botaoProvisorio() {
-        ((ActivityHome)getActivity()).replaceFragment(FragmentNotes.newInstance(), "tag", true);
-    }
-
 }

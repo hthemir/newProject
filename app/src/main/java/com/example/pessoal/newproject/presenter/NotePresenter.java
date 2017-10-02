@@ -46,6 +46,11 @@ public class NotePresenter implements MainMVP.RequiredPresenterOperations, MainM
     }
 
     @Override
+    public void editNote(Note note) {
+        //// TODO: 02/10/2017
+    }
+
+    @Override
     public void deleteNote(Note note) {
         mModel.removeNote(note);
     }

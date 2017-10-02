@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_note_header"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_list_note_title"
+            android:layout_width="270dp"
+            android:layout_height="@dimen/default_text_view_height"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:background="@null"
+            android:ems="60"
+            android:singleLine="true"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="50dp"
+            android:layout_height="@dimen/default_text_view_height"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_toRightOf="@id/tv_list_note_title"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/icon_edit" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="50dp"
+            android:layout_height="@dimen/default_text_view_height"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_toRightOf="@id/iv_edit"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/icon_delete" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_list_note_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10" />
+
+</LinearLayout>

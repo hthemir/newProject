@@ -23,6 +23,7 @@ public interface MainMVP {
         void onConfigurationChanged(RequiredViewOperations view);
         void onDestroy(boolean isChangingConfig);
         void newNote(String noteTitle, String noteText);
+        void editNote(Note note);
         void deleteNote(Note note);
     }
 

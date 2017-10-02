@@ -5,6 +5,8 @@ package com.example.pessoal.newproject.model;
  */
 
 public class Note {
+    /*se o contain falhar na hora de editar/remover, utilizar id, dando override no metodo necessario
+    private int id;*/
     private String noteTitle;
     private String noteText;
     private String date;
